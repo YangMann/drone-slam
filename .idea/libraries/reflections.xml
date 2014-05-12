@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="reflections">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/drone-slam/lib/reflections/guava-11.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/drone-slam/lib/reflections/javassist-3.16.1-GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/drone-slam/lib/reflections/reflections-0.9.9-RC1.jar!/" />
+      <root url="file://$PROJECT_DIR$/drone-slam/lib/reflections" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/drone-slam/lib/reflections" recursive="false" />
+  </library>
+</component>
