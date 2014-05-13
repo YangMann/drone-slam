@@ -22,9 +22,7 @@ public class KeyboardLayoutPanel extends JPanel implements ICCPlugin {
     private int height;
 
     private JRadioButton originalButton;
-    ;
     private JRadioButton alternativeButton;
-    ;
 
     private IARDrone drone;
 
