@@ -8,9 +8,10 @@ import java.net.SocketException;
 /**
  * Created by JeffreyZhang on 2014/5/13.
  */
-public class NavdataListener {
+public class NavdataListener extends Thread {
 
     private int port_number;
+    private DatagramSocket udp_socket;
     private byte[] received_data = new byte[1024];
 
     public static boolean is_running;
@@ -19,10 +20,11 @@ public class NavdataListener {
         port_number = port;
     }
 
-    public void start() {
+    public void run() {
         try {
-            DatagramSocket udp_socket = new DatagramSocket(port_number);
+            udp_socket = new DatagramSocket(port_number);
             is_running = true;
+            System.out.println("#### UDP RUNNING ####");
             while (is_running) {
                 DatagramPacket received_packet = new DatagramPacket(received_data, received_data.length);
                 udp_socket.receive(received_packet);
@@ -34,9 +36,5 @@ public class NavdataListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void stop() {
-        is_running = false;
     }
 }
