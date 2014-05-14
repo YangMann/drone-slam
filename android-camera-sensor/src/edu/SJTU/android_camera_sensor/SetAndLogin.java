@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import edu.SJTU.CameraAndSensor.R;
 
 public class SetAndLogin extends Activity {
     String ipname = null;

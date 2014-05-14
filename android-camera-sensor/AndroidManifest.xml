@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.SJTU.android_camera_sensor"
+          package="edu.SJTU.CameraAndSensor"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -29,7 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="edu.SJTU.android_camera_sensor.MainActivity"/>
+        <activity
+                android:name="edu.SJTU.android_camera_sensor.MainActivity"
+                android:screenOrientation="landscape"
+                android:label="@string/app_name">
+
+        </activity>
 
 
     </application>

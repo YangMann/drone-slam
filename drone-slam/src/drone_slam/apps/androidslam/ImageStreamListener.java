@@ -6,11 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
+import java.nio.ByteBuffer;
 
 /**
  * Created by JeffreyZhang on 2014/5/14.
@@ -41,14 +42,42 @@ public class ImageStreamListener extends Thread {
             while (is_running) {
                 connection_socket = tcp_socket.accept();
                 InputStream received_stream = connection_socket.getInputStream();
+
+                data_buffer = new byte[1024];
                 data_length = received_stream.read(data_buffer);
-                byte[] timestamp_buffer = new byte[32];
-                byte[] image_buffer = new byte[data_length - 32];
-                System.arraycopy(data_buffer, 0, timestamp_buffer, 0, 32);
-                System.arraycopy(data_buffer, 32, image_buffer, 0, data_buffer.length - 32);
-                System.out.println("#### IMAGE_TIMESTAMP" + Arrays.toString(timestamp_buffer));
+                byte[] timestamp_buffer = new byte[64];
+                byte[] image_buffer = new byte[data_length - 64];
+                System.arraycopy(data_buffer, 0, timestamp_buffer, 0, 64);
+                System.arraycopy(data_buffer, 64, image_buffer, 0, data_length - 64);
+
+                /*
+                 *  测试byte[] 转 long
+                 */
+                ByteBuffer timestamp_bb = ByteBuffer.wrap(timestamp_buffer);
+                long image_timestamp = timestamp_bb.getLong();
+
+                System.out.println("#### IMAGE_TIMESTAMP\t" + image_timestamp);
+                System.out.println(System.currentTimeMillis());
+
+                ByteArrayOutputStream s = new ByteArrayOutputStream();
+                long temp = System.currentTimeMillis();
+                s.write((int) temp);
+                s.write((int) (temp << 32));
+                ByteArrayInputStream i = new ByteArrayInputStream(s.toByteArray());
+                byte[] t = new byte[64];
+                i.read(t);
+                timestamp_bb = ByteBuffer.wrap(t);
+                System.out.println(timestamp_bb.getLong());
+
+                /*
+                 *  测试结束
+                 */
+
                 ByteArrayInputStream received_image_input_stream = new ByteArrayInputStream(image_buffer);
                 BufferedImage received_image = ImageIO.read(received_image_input_stream);
+                if (received_image == null) {
+                    System.out.println("received_image == null");
+                }
                 ImageIcon received_image_icon = new ImageIcon(received_image);
                 setBackground(frame, received_image_icon, true);
             }

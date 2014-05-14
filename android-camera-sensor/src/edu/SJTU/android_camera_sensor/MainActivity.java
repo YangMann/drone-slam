@@ -15,6 +15,7 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
+import edu.SJTU.CameraAndSensor.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
