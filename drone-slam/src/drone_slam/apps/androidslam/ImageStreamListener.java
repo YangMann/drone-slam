@@ -43,10 +43,10 @@ public class ImageStreamListener extends Thread {
                 InputStream received_stream = connection_socket.getInputStream();
                 data_length = received_stream.read(data_buffer);
                 byte[] timestamp_buffer = new byte[32];
-                byte[] image_buffer = new byte[data_buffer.length - 32];
+                byte[] image_buffer = new byte[data_length - 32];
                 System.arraycopy(data_buffer, 0, timestamp_buffer, 0, 32);
                 System.arraycopy(data_buffer, 32, image_buffer, 0, data_buffer.length - 32);
-                System.out.println(Arrays.toString(timestamp_buffer));
+                System.out.println("#### IMAGE_TIMESTAMP" + Arrays.toString(timestamp_buffer));
                 ByteArrayInputStream received_image_input_stream = new ByteArrayInputStream(image_buffer);
                 BufferedImage received_image = ImageIO.read(received_image_input_stream);
                 ImageIcon received_image_icon = new ImageIcon(received_image);
