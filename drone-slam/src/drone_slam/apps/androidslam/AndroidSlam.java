@@ -16,14 +16,14 @@ public class AndroidSlam {
     }
 
     private void start() {
-//        navdata_listener = new NavdataListener(port_number_navdata);
+        navdata_listener = new NavdataListener(port_number_navdata);
         image_stream_listener = new ImageStreamListener(port_number_image_stream);
-//        navdata_listener.start();
+        navdata_listener.start();
         image_stream_listener.start();
     }
 
     private void stop() {
-//        navdata_listener.interrupt();
+        navdata_listener.interrupt();
         image_stream_listener.interrupt();
     }
 

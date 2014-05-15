@@ -366,10 +366,12 @@ class StreamIt implements Camera.PreviewCallback {
             YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
             if (image != null) {
                 ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+                ByteArrayOutputStream wrapped_outstream = new ByteArrayOutputStream();
 
                 long temp = System.currentTimeMillis();
-                outstream.write((int) temp); // i1
-                outstream.write((int) (temp << 32)); // i2
+                for (int index = 7; index >= 0; --index) {
+                    outstream.write((byte) (temp >> (index * 8)));
+                }
 
             	/*
                     long l1 = (i2 & 0x000000ffffffffL) << 32;
@@ -379,8 +381,10 @@ class StreamIt implements Camera.PreviewCallback {
 
                 image.compressToJpeg(new Rect(0, 0, size.width, size.height), 80, outstream);
                 outstream.flush();
+                wrapped_outstream.write((Integer.toString(outstream.size()) + "\n").getBytes());
+                wrapped_outstream.write(outstream.toByteArray());
                 //启用线程将图像数据发送出去
-                Thread th = new MyThread(outstream, ipname, videoportnum);
+                Thread th = new MyThread(wrapped_outstream, ipname, videoportnum);
                 th.start();
             }
         } catch (Exception ex) {
