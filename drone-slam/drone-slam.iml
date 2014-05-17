@@ -30,6 +30,7 @@
     <orderEntry type="library" name="commons-net-3.2" level="project" />
     <orderEntry type="library" name="reflections" level="project" />
     <orderEntry type="library" name="zxing" level="project" />
+    <orderEntry type="library" name="opencv-248" level="project" />
   </component>
 </module>
 

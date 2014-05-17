@@ -225,7 +225,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                 s = new DatagramSocket(port);
                 // Wait for connection requests
                 publishProgress("Waiting for clients.");
-                while (mConnected == false) {
+                while (!mConnected) {
                     DatagramPacket p = new DatagramPacket(message, message.length);
                     s.receive(p);
 
@@ -238,7 +238,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                         // Store client data for later retrieval
                         mClientIP = p;
                         // Tell the client we hear them.
-                        byte[] buf = new String("server:Welcome").getBytes();
+                        byte[] buf = "server:Welcome".getBytes();
                         p = new DatagramPacket(buf, buf.length, clientIP, clientPort);
                         s.send(p);
                         publishProgress("Valid client @" + clientIP.getHostAddress() + ":" + clientPort);

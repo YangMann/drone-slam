@@ -43,7 +43,6 @@ public class ImageStreamListener extends Thread {
                 InputStream received_stream = connection_socket.getInputStream();
                 String received_stream_size = readResponse(received_stream);
                 int expected_byte_number = Integer.parseInt(received_stream_size);
-                System.out.println("Expecting\t" + expected_byte_number);
 
                 data_buffer = new byte[1024];
                 ByteArrayOutputStream baos = new ByteArrayOutputStream(expected_byte_number);
@@ -54,8 +53,8 @@ public class ImageStreamListener extends Thread {
                     bytes_read += bytes_in;
                     baos.write(data_buffer, 0, bytes_in);
                 }
-                System.out.println("Read\t\t" + bytes_read);
                 baos.close();
+
                 byte[] whole_data_buffer = baos.toByteArray();
                 byte[] timestamp_buffer = new byte[8];
                 byte[] image_buffer = new byte[expected_byte_number - 8];
@@ -89,7 +88,6 @@ public class ImageStreamListener extends Thread {
         while ((in = inputStream.read()) != '\n') {
             sb.append((char) in);
         }
-        System.out.println(sb.toString());
         return sb.toString();
     }
 
@@ -100,7 +98,7 @@ public class ImageStreamListener extends Thread {
             Container pane = frame.getContentPane();
             ((JPanel) pane).setOpaque(false);
             JLayeredPane layered_pane = frame.getLayeredPane();
-            Component[] components = layered_pane.getComponentsInLayer(Integer.MIN_VALUE);
+            Component[] components = layered_pane.getComponentsInLayer(0);
             if (components.length > 0) {
                 for (Component component : components) {
                     layered_pane.remove(component);
@@ -111,7 +109,7 @@ public class ImageStreamListener extends Thread {
                 icon.setImage(icon.getImage().getScaledInstance(frame.getSize().width, frame.getSize().height, Image.SCALE_SMOOTH));
             }
             label.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
-            layered_pane.add(label, Integer.MIN_VALUE);
+            layered_pane.add(label, 0);
         }
     }
 
